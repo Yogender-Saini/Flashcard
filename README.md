@@ -9,7 +9,9 @@
 ##### Edit Flashcard place where you are able to add flashcards and preview how they would look and save them. 
 
 ## Description: 
-#####
+##### The purpose of this program is to provide a simple web-based flashcard application. It is designed for users who want an interactive and digital way to study and review information using flashcards. The program caters to individuals who may be preparing for exams, learning new topics, or engaging in self-directed learning.
+
+
 
 ## Summary of the program's functionality
 ### login.html: 
