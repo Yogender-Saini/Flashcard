@@ -36,4 +36,7 @@
 ##### Stores flashcards in-memory and provides functionality to add, edit, remove, and navigate through flashcards.
 ##### Implements server-side logic for handling user actions, such as logging in, navigating flashcards, and editing flashcards.
 
+## Breakthrough Moment
+##### I had multiple breakthrough moments but one of the most important ones that I believe was about when I fixed the edit.html so that I am able to add more flashcards directly from the website and not have to go back to the code to do it. I believe that I had to learn multiple things for this because it was not working for me. flashcards[question] = {'question': question, 'answer': answer} for example this if i have a question and an answer this takes that input and adds it in the flashcard and the line after this one: flash('Flashcard added successfully', 'success') shows that it has been added and refreshes the page. 
+
 
