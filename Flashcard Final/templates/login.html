@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f4f4f4;
+            }
+
+            .login-container {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                transition: opacity 1s;
+                /* Add transition for a smoother effect */
+            }
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 16px;
+                box-sizing: border-box;
+            }
+
+            button {
+                background-color: #3498db;
+                color: #fff;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .error-message {
+                color: red;
+                margin-top: 10px;
+            }
+
+            /* Added style for welcome message */
+            .welcome-message {
+                color: green;
+                font-size: 24px;
+                /* Increase font size for emphasis */
+                font-weight: bold;
+                /* Make the text bold */
+                text-align: center;
+                /* Center the text */
+                margin-top: 20px;
+                /* Increase top margin for spacing */
+            }
+
+            /* Added style to hide the login container */
+            .hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="login-container" id="loginContainer">
+            <h2>Login</h2>
+            <!-- Added onsubmit attribute to trigger the showWelcome function -->
+            <form method="post" onsubmit="authenticateUser(event)">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- Display welcome message initially hidden -->
+            <p class="welcome-message" id="welcomeMessage" style="display:none;"></p>
+
+            <!-- Display error message if it exists -->
+            <p class="error-message" id="errorMessage" style="display:none;"></p>
+        </div>
+
+        <script>
+            // Modified function to authenticate user
+            function authenticateUser(event) {
+                event.preventDefault(); // Prevent form submission
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const loginContainer = document.getElementById('loginContainer');
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                const errorMessage = document.getElementById('errorMessage');
+
+                // Simulate server-side authentication (replace with actual server logic)
+
+                // Update and display the welcome message
+                welcomeMessage.textContent = `Welcome, ${username}!`;
+                welcomeMessage.style.display = 'block';
+
+                // Set timeout to hide the welcome message after 2 seconds (2000 milliseconds)
+                setTimeout(() => {
+                    // Reset styles and show the login container
+                    welcomeMessage.style.display = 'none';
+                    loginContainer.classList.remove('hidden');
+                }, 2000);
+
+                // Clear any previous error messages
+                errorMessage.style.display = 'none';
+            } else {
+                // Display error message for incorrect credentials
+                errorMessage.textContent = 'Invalid username or password';
+                errorMessage.style.display = 'block';
+            }
+            }
+        </script>
+    </body>
+
+</html>

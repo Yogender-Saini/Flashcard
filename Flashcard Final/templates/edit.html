@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Flashcards</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f5f5f5;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bulk-add-container {
+                width: 100%;
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            .bulk-add-heading {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            form {
+                width: 80%;
+                max-width: 600px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .flex-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 16px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                width: 48%;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                display: inline-block;
+            }
+
+            button {
+                width: 100%;
+                background-color: #4caf50;
+                color: #fff;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            .flashcard-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 20px;
+                margin: 20px;
+                max-width: 1200px;
+            }
+
+            .flashcard {
+                perspective: 1000px;
+                cursor: pointer;
+            }
+
+            .card {
+                width: 100%;
+                height: 150px;
+                transform-style: preserve-3d;
+                transition: transform 0.5s;
+            }
+
+            .card:hover {
+                transform: rotateY(180deg);
+            }
+
+            .card-face,
+            .card-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 8px;
+                backface-visibility: hidden;
+            }
+
+            .card-face {
+                background-color: #2196F3;
+                color: #fff;
+            }
+
+            .card-back {
+                background-color: #4CAF50;
+                color: #fff;
+                transform: rotateY(180deg);
+            }
+
+            .flashcard p {
+                margin: 0;
+            }
+
+            .flipped {
+                transform: rotateY(180deg);
+            }
+
+            .checkbox-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 20px;
+                margin: 20px;
+                max-width: 1200px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Bulk Add Section -->
+        <div class="bulk-add-container">
+            <div class="bulk-add-heading">Bulk Add Flashcards</div>
+            <form method="POST" action="/edit">
+                <div class="flex-container">
+                    <label for="bulk-question">Question:</label>
+                    <label for="bulk-answer">Answer:</label>
+                </div>
+                <div class="flex-container">
+                    <textarea id="bulk-question" name="question" rows="4" required></textarea>
+                    <textarea id="bulk-answer" name="answer" rows="4" required></textarea>
+                </div>
+                <!-- Submit button for bulk adding new flashcards -->
+                <button type="submit">Save Flashcards</button>
+            </form>
+        </div>
+
+        <!-- Display flashcards -->
+        <div class="flashcard-container">
+            {% for flashcard_key, flashcard in flashcards.items() %}
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="card">
+                        <div class="card-face">
+                            <p>{{ flashcard['question'] }}</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <p>{{ flashcard['answer'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="POST" action="/remove_flashcard">
+            {% for flashcard_key, flashcard in flashcards.items() %}
+                <div class="flashcard">
+                    <input type="checkbox" name="selected_flashcards" value="{{ flashcard_key }}">
+                    <div class="card">
+                        <div class="card-face">
+                            <p>{{ flashcard['question'] }}</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <p>{{ flashcard['answer'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- Submit button for removing selected flashcards -->
+            <button type="submit">Remove Flashcards</button>
+        </form>
+
+        <!-- Logout and Go Back Buttons -->
+        <div class="flex-container">
+            <!-- Logout Button -->
+            <button onclick="logout()">Logout</button>
+
+            <!-- Go Back Button -->
+            <button onclick="goToFlashcard()">Flashcard</button>
+        </div>
+
+
+        <!-- JavaScript for flipping cards -->
+        <script>
+            function flipCard(element) {
+                element.querySelector('.card').classList.toggle('flipped');
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const flashcards = document.querySelectorAll('.flashcard');
+
+                flashcards.forEach(card => {
+                    card.addEventListener('click', function() {
+                        const cardElement = this.querySelector('.card');
+                        cardElement.classList.toggle('flipped');
+                    });
+                });
+            });
+
+            function logout() {
+                window.location.href = "/logout";
+            }
+
+            function goToFlashcard() {
+                window.location.href = "/flashcard";
+            }
+        </script>
+
+    </body>
+
+</html>
