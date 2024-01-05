@@ -7,6 +7,8 @@
 ##### Number below flashcard which shows what flashcard its on.
 ##### Previous and Next buttons which allows to switch between flashcards
 ##### Edit Flashcard place where you are able to add flashcards and preview how they would look and save them. 
+##### Remove Flashcard button which allows you to select multiple flashcards and remove them with one button.  
+##### Star Flashcard which you can press to highlight a flashcard which is hard for you to understand, and thus later pay more attention to it. 
 
 ## Description: 
 ##### The purpose of this program is to provide a simple web-based flashcard application. It is designed for users who want an interactive and digital way to study and review information using flashcards. The program caters to individuals who may be preparing for exams, learning new topics, or engaging in self-directed learning.
@@ -23,6 +25,8 @@
 ##### Displays flashcards with questions and answers.
 ##### Users can navigate between flashcards using "Next" and "Previous" buttons.
 ##### Implemented with AJAX to dynamically load the next and previous flashcards without refreshing the entire page.
+##### Provides a function which shows what flashcard you are on currently. 
+##### Star flashcard which allows you to star flashcards which are hard for you to understand. 
 ##### Provides a logout button to log out the user.
 
 ### edit.html:
